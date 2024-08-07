@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cocktail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Throwable;
 
 class CocktailController extends Controller
@@ -11,6 +12,11 @@ class CocktailController extends Controller
     public function getCocktails(){
         $Cocktails = Cocktail::all();
         return $Cocktails;
+    }
+
+    public function getCocktailsApiByLetter(string $letter){
+        $cocktailsApiByLetter=Http::get(url:'https://www.thecocktaildb.com/api/json/v1/1/search.php?f='.$letter);
+        return $cocktailsApiByLetter;
     }
 
 
