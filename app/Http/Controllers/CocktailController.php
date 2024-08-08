@@ -9,47 +9,50 @@ use Throwable;
 
 class CocktailController extends Controller
 {
-    public function getCocktails(){
+    public function getCocktails()
+    {
         $Cocktails = Cocktail::all();
         return $Cocktails;
     }
 
-    public function getCocktailsApiByLetter(string $letter){
-        $cocktailsApiByLetter=Http::get(url:'https://www.thecocktaildb.com/api/json/v1/1/search.php?f='.$letter);
+    public function getCocktailsApiByLetter(string $letter)
+    {
+        $cocktailsApiByLetter = Http::get(url: 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=' . $letter);
         return $cocktailsApiByLetter;
     }
 
-    public function getCocktailsApiById(string $id){
-        $cocktailsApiById=Http::get(url:'www.thecocktaildb.com/api/json/v1/1/lookup.php?i='.$id);
+    public function getCocktailsApiById(string $id)
+    {
+        $cocktailsApiById = Http::get(url: 'www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' . $id);
         return $cocktailsApiById;
     }
 
 
     public function create(Request $request)
     {
+     
         try {
             $newCocktail = new Cocktail();
+            $newCocktail->id = $request->id;
             $newCocktail->name = $request->name;
             $newCocktail->category = $request->category;
             $newCocktail->image = $request->image;
-            $newCocktail->email = $request->email;
             $newCocktail->instruccions = $request->instruccions;
             $newCocktail->instruccionsEs = $request->instruccionsEs;
             $newCocktail->instruccionsIt = $request->instruccionsIt;
             $newCocktail->instruccionsFr = $request->instruccionsFr;
             $newCocktail->save();
             return response()->json($newCocktail);
-
         } catch (Throwable $throwableException) {
             $response = [
                 'type' => "error",
-                'content' => "Ocurrió un error al crear el Cocktail.",$throwableException
+                'content' => "Ocurrió un error al crear el Cocktail.", $throwableException
             ];
             return $response;
         }
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
             $editCocktail = Cocktail::find($id);
@@ -82,7 +85,7 @@ class CocktailController extends Controller
 
     public function destroy($id)
     {
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $Cocktail = Cocktail::findOrFail($id);
                 $Cocktail->delete();
@@ -93,7 +96,7 @@ class CocktailController extends Controller
                     'content' => "Ocurrió un error al eliminar el Cocktail."
                 ];
             }
-        }else{
+        } else {
             $response = [
                 'type' => "error",
                 'content' => "el Cocktail que intenta eliminar no existe."

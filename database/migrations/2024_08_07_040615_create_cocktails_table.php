@@ -18,10 +18,10 @@ class CreateCocktailsTable extends Migration
             $table->string('name');
             $table->string('category'); 
             $table->string('image');
-            $table->string('instruccions'); 
-            $table->string('instruccionsEs'); 
-            $table->string('instruccionsIt');
-            $table->string('instruccionsFr');
+            $table->string('instruccions')->nullable(); 
+            $table->string('instruccionsEs')->nullable(); 
+            $table->string('instruccionsIt')->nullable();
+            $table->string('instruccionsFr')->nullable();
             $table->timestamps();
         });
     }
