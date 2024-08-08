@@ -23,8 +23,12 @@ Route::post('register',[UserController::class, 'register'])->name('register');
 
 Route::group(['middleware' => ["auth:sanctum"]], function () {
     //cocktails
+    //api
+    Route::get('getCocktailsApiByLetter/{letter}', [CocktailController::class, 'getCocktailsApiByLetter']); 
+    Route::get('getCocktailsApiById/{id}', [CocktailController::class, 'getCocktailsApiById']); 
+
+    //BD
     Route::get('cocktails_saved', [CocktailController::class, 'getCocktails']);
-    Route::get('getCocktailsApiByLetter/{letter}', [CocktailController::class, 'getCocktailsApiByLetter']);
     Route::post('create-cocktail', [CocktailController::class, 'create']);
     Route::put('update-cocktail/{id}', [CocktailController::class, 'update']);
     Route::delete('delete-cocktail/{id}', [CocktailController::class, 'destroy']);  

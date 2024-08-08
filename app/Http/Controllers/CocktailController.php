@@ -19,6 +19,11 @@ class CocktailController extends Controller
         return $cocktailsApiByLetter;
     }
 
+    public function getCocktailsApiById(string $id){
+        $cocktailsApiById=Http::get(url:'www.thecocktaildb.com/api/json/v1/1/lookup.php?i='.$id);
+        return $cocktailsApiById;
+    }
+
 
     public function create(Request $request)
     {
