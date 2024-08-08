@@ -52,10 +52,31 @@ class CocktailController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function getCoktailBd(string $id){
+        $Cocktail_by_id= Cocktail::find($id);
+
+        if(!is_null($Cocktail_by_id)){
+            try {
+                return response()->json($Cocktail_by_id);
+
+            } catch (Throwable $th) {
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'Ocurrió un error al consultar el coctel', $th->getMessage()
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status'=>false,
+                'message'=>"el coctel no existe."
+            ]);
+        }
+    }
+
+    public function update(Request $request)
     {
         try {
-            $editCocktail = Cocktail::find($id);
+            $editCocktail = Cocktail::find($request->id);
             if (isset($editCocktail)) {
                 $editCocktail->name = $request->name;
                 $editCocktail->category = $request->category;
